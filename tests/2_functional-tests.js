@@ -33,8 +33,8 @@ suite('Functional Tests', () => {
       `translated-sentence` `div` when the "Translate" button is pressed.
     */
     test("'Everything looks good to me!' message appended to the `translated-sentence` `div`", done => {
-      const textInput = document.getElementById('text-input');
-      textInput.value = "Hello";
+      const textInputDiv = document.getElementById('text-input');
+      textInputDiv.value = "Hello";
       Translator.translateHandler();
       const result = document.getElementById('translated-sentence').textContent;
       const expected = "Everything looks good to me!";
@@ -48,8 +48,8 @@ suite('Functional Tests', () => {
       the `error-msg` `div`.
     */
     test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
-      const textInput = document.getElementById('text-input');
-      textInput.value = "";
+      const textInputDiv = document.getElementById('text-input');
+      textInputDiv.value = "";
       Translator.translateHandler();
       const result = document.getElementById('error-msg').textContent;
       const expected = "Error: No text to translate.";
@@ -64,9 +64,16 @@ suite('Functional Tests', () => {
       The text area and both the `translated-sentence` and `error-msg`
       `divs` are cleared when the "Clear" button is pressed.
     */
-    test.skip("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
-
-      // done();
+    test("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
+      const textInputDiv = document.getElementById('text-input');
+      const translatedSentenceDiv = document.getElementById('translated-sentence');
+      const errorDiv = document.getElementById('error-msg');
+      Translator.clearHandler();
+      const expected = "";
+      assert.equal(textInputDiv.value, expected);     
+      assert.equal(translatedSentenceDiv.textContent, expected);
+      assert.equal(errorDiv.textContent, expected);     
+      done();
     });
 
   });
