@@ -36,8 +36,8 @@ suite('Functional Tests', () => {
       const textInput = document.getElementById('text-input');
       textInput.value = "Hello";
       Translator.translateHandler();
-      const result = document.getElementById('translated-sentence').value;
-      const expected = "Hello";
+      const result = document.getElementById('translated-sentence').textContent;
+      const expected = "Everything looks good to me!";
       assert.equal(result, expected);
       done();
     });
@@ -51,8 +51,8 @@ suite('Functional Tests', () => {
       const textInput = document.getElementById('text-input');
       textInput.value = "";
       Translator.translateHandler();
-      const result = document.getElementById('error-msg').value;
-      const expected = "Error: No text to translate";
+      const result = document.getElementById('error-msg').textContent;
+      const expected = "Error: No text to translate.";
       assert.equal(result, expected);
       done();
     });
