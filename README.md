@@ -48,6 +48,6 @@ Una idea: recorrer el vocabulario y buscar en el input subcadenas que coincidan 
 
 ## Recursos
 
-How to Design Programs
+How to Design Programs - Part 1 - Chapter 3 <https://htdp.org/2020-8-1/Book/part_one.html#%28part._ch~3ahtdp%29>
 
 
