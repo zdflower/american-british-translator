@@ -26,7 +26,7 @@ suite('Unit Tests', () => {
 
   suite('Function ____()', () => {
 
-    suite('American to British English', () => {
+    suite.skip('American to British English', () => {
 
       test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
         const input = 'Mangoes are my favorite fruit.';
@@ -100,7 +100,7 @@ suite('Unit Tests', () => {
 
     });
 
-    suite('British to American English', () => {
+    suite.skip('British to American English', () => {
 
       test('We watched the footie match for a while. --> We watched the soccer match for a while.', done => {
         const input = 'We watched the footie match for a while.';

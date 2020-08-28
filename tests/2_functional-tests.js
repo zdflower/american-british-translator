@@ -23,8 +23,7 @@ suite('Functional Tests', () => {
       and the translated words or terms are wrapped in 
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
-    test("Translation appended to the `translated-sentence` `div`", done => {
-
+    test.skip("Translation appended to the `translated-sentence` `div`", done => {
       // done();
     });
 
@@ -34,8 +33,13 @@ suite('Functional Tests', () => {
       `translated-sentence` `div` when the "Translate" button is pressed.
     */
     test("'Everything looks good to me!' message appended to the `translated-sentence` `div`", done => {
-
-      // done();
+      const textInput = document.getElementById('text-input');
+      textInput.value = "Hello";
+      Translator.translateHandler();
+      const result = document.getElementById('translated-sentence').value;
+      const expected = "Hello";
+      assert.equal(result, expected);
+      done();
     });
 
     /* 
@@ -44,8 +48,13 @@ suite('Functional Tests', () => {
       the `error-msg` `div`.
     */
     test("'Error: No text to translate.' message appended to the `translated-sentence` `div`", done => {
-
-      // done();
+      const textInput = document.getElementById('text-input');
+      textInput.value = "";
+      Translator.translateHandler();
+      const result = document.getElementById('error-msg').value;
+      const expected = "Error: No text to translate";
+      assert.equal(result, expected);
+      done();
     });
 
   });
@@ -55,7 +64,7 @@ suite('Functional Tests', () => {
       The text area and both the `translated-sentence` and `error-msg`
       `divs` are cleared when the "Clear" button is pressed.
     */
-    test("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
+    test.skip("Text area, `translated-sentence`, and `error-msg` are cleared", done => {
 
       // done();
     });
