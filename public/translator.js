@@ -31,7 +31,7 @@ function translateHandler(){
 /* String -> Boolean
 A partir del value de textInputDiv, devuelve true si no es una cadena vacía. False en otro caso. */
 function thereIsSomethingToTranslate(){
-  return true; //stub
+  return textInputDiv.value !== "";
 }
 
 /* String Idioma -> String
