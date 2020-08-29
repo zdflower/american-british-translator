@@ -19,7 +19,7 @@ const localeSelect = document.getElementById('locale-select');
    Debe agregar (append, no reemplazar) la traducción de la frase en el div con id "translated-sentence".
    Si no hay texto en text-input entonces agrega al div con id "error-msg" el mensaje de error: "Error: No text to translate." */
 function translateHandler(){
-  if (!thereIsSomethingToTranslate()) showErrorMsg(NO_TEXT_ERROR);
+  if (!isThereSomethingToTranslate()) showErrorMsg(NO_TEXT_ERROR);
   else {
   // obtener la traducción
     const translation = translate(textInputDiv.value, localeSelect.value);
@@ -30,7 +30,7 @@ function translateHandler(){
 
 /* String -> Boolean
 A partir del value de textInputDiv, devuelve true si no es una cadena vacía. False en otro caso. */
-function thereIsSomethingToTranslate(){
+function isThereSomethingToTranslate(){
   return textInputDiv.value !== "";
 }
 
