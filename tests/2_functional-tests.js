@@ -23,8 +23,16 @@ suite('Functional Tests', () => {
       and the translated words or terms are wrapped in 
       `<span class="highlight">...</span>` tags when the "Translate" button is pressed.
     */
-    test.skip("Translation appended to the `translated-sentence` `div`", done => {
-      // done();
+    test("Translation appended to the `translated-sentence` `div`", done => {
+      const textInputDiv = document.getElementById('text-input');
+      const localeSelect = document.getElementById('locale-select');
+      localeSelect.value = "british-to-american";
+      textInputDiv.value = "bicky";
+      Translator.translateHandler();
+      const result = document.getElementById('translated-sentence').textContent;
+      const expected = "cookie";
+      assert.equal(result, expected);
+      done();
     });
 
     /* 
