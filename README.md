@@ -48,6 +48,8 @@ Una idea: recorrer el vocabulario y buscar en el input subcadenas que coincidan 
 
 ## Recursos
 
+Get selected value in dropdown list using javascript: <https://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript>
+
 How to Design Programs - Part 1 - Chapter 3 <https://htdp.org/2020-8-1/Book/part_one.html#%28part._ch~3ahtdp%29>
 
 
