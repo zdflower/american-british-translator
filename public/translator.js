@@ -35,7 +35,9 @@ function isThereSomethingToTranslate(){
 }
 
 /* String Idioma -> String
-Traduce sentence en el sentido indicado por Idioma. Devuelve la frase traducida. */
+Traduce sentence en el sentido indicado por idioma. Devuelve la frase traducida.
+Contempla variaciones en la escritura de palabras, palabras completamente diferentes, el modo de escribir la hora y los títulos y denominaciones honoríficas.
+Cada palabra traducida debe estar formateada con <span class="highlight">...</span>*/
 function translate(sentence, idioma){
   return `Frase: ${sentence} / Idioma: ${idioma}`; //stub 
 }
