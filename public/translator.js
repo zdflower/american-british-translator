@@ -8,6 +8,8 @@ const EVERYTHING_GOOD = 'Everything looks good to me!';
 const errorDiv = document.getElementById('error-msg');
 const translatedSentenceDiv = document.getElementById('translated-sentence');
 const textInputDiv = document.getElementById('text-input');
+const clearBtn = document.getElementById('clear-btn');
+const translateBtn = document.getElementById('translate-btn');
 
 /* String Idioma -> 
    Responde al evento de click en el botón "translate-btn"
@@ -48,6 +50,7 @@ function showErrorMsg(msg){
 
 // Event listeners
 
+clearBtn.addEventListener('click', clearHandler);
 
 /* 
   Export your functions for testing in Node.
