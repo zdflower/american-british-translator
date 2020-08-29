@@ -50,6 +50,12 @@ Una idea: recorrer el vocabulario y buscar en el input subcadenas que coincidan 
 
 Get selected value in dropdown list using javascript: <https://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript>
 
+Replace:  <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace>
+
+Object.values() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values>
+
+Regular expressions: <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions>
+
 How to Design Programs - Part 1 - Chapter 3 <https://htdp.org/2020-8-1/Book/part_one.html#%28part._ch~3ahtdp%29>
 
 
