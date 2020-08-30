@@ -39,7 +39,25 @@ Traduce sentence en el sentido indicado por idioma. Devuelve la frase traducida.
 Contempla variaciones en la escritura de palabras, palabras completamente diferentes, el modo de escribir la hora y los títulos y denominaciones honoríficas.
 Cada palabra traducida debe estar formateada con <span class="highlight">...</span>*/
 function translate(sentence, idioma){
-  return `Frase: ${sentence} / Idioma: ${idioma}`; //stub 
+  let translated = sentence;
+  if (idioma === "american") translated = translateFromAmerican(translated);
+  else { translated =  translateFromBritish(translated); 
+  return translated; 
+  }
+}
+
+/* String -> String
+ * Translates sentence from american to british.
+ * Returns the translated sentence. */
+function translateFromAmerican(sentence){
+  return sentence; // stub
+}
+
+/* String -> String
+ * Translates sentence from british to american 
+ * Returns the translated sentence. */
+function translateFromBritish(sentence){
+  return sentence; // stub
 }
 
 /* Responde al click del clear-btn
@@ -80,6 +98,8 @@ translateBtn.addEventListener('click', translateHandler);
 try {
   module.exports = {
     translateHandler,
-    clearHandler
+    clearHandler,
+    translateFromAmerican,
+    translateFromBritish
   }
 } catch (e) {}
