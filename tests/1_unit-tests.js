@@ -26,72 +26,72 @@ suite('Unit Tests', () => {
 
   suite('Function ____()', () => {
 
-    suite.skip('American to British English', () => {
+    suite('American to British English', () => {
 
-      test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
+      test.skip('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
         const input = 'Mangoes are my favorite fruit.';
         const output = 'Mangoes are my favourite fruit.';
 
-        // done();
+        done();
       });
 
-      test('I ate yogurt for breakfast. --> I ate yoghurt for breakfast.', done => {
+      test.skip('I ate yogurt for breakfast. --> I ate yoghurt for breakfast.', done => {
         const input = 'I ate yogurt for breakfast.';
         const output = 'I ate yoghurt for breakfast.';
 
         // done();
       });
 
-      test("We had a party at my friend's condo. --> We had a party at my friend's flat.", done => {
+      test.skip("We had a party at my friend's condo. --> We had a party at my friend's flat.", done => {
         const input = "We had a party at my friend's condo.";
         const output = "We had a party at my friend's flat.";
 
         // done();
       });
 
-      test('Can you toss this in the trashcan for me? --> Can you toss this in the bin for me?', done => {
+      test.skip('Can you toss this in the trashcan for me? --> Can you toss this in the bin for me?', done => {
         const input = 'Can you toss this in the trashcan for me?';
         const output = 'Can you toss this in the bin for me?';
 
         // done();
       });
 
-      test('The parking lot was full. --> The car park was full.', done => {
+      test.skip('The parking lot was full. --> The car park was full.', done => {
         const input = 'The parking lot was full.';
         const output = 'The car park was full.';
 
         // done();
       });
 
-      test('Like a high tech Rube Goldberg machine. --> Like a high tech Heath Robinson device.', done => {
+      test.skip('Like a high tech Rube Goldberg machine. --> Like a high tech Heath Robinson device.', done => {
         const input = 'Like a high tech Rube Goldberg machine.';
         const output = 'Like a high tech Heath Robinson device.';
 
         // done();
       });
       
-      test('To play hooky means to skip class or work. --> To bunk off means to skip class or work.', done => {
+      test.skip('To play hooky means to skip class or work. --> To bunk off means to skip class or work.', done => {
         const input = 'To play hooky means to skip class or work.';
         const output = 'To bunk off means to skip class or work.';
 
         // done();
       });
 
-      test('No Mr. Bond, I expect you to die. --> No Mr Bond, I expect you to die. ', done => {
+      test.skip('No Mr. Bond, I expect you to die. --> No Mr Bond, I expect you to die. ', done => {
         const input = 'No Mr. Bond, I expect you to die.';
         const output = 'No Mr Bond, I expect you to die.';
 
         // done();
       });
 
-      test('Dr. Grosh will see you now. --> Dr Grosh will see you now. ', done => {
+      test.skip('Dr. Grosh will see you now. --> Dr Grosh will see you now. ', done => {
         const input = 'Dr. Grosh will see you now.';
         const output = 'Dr Grosh will see you now.';
 
         // done();
       });
 
-      test('Lunch is at 12:15 today. --> Lunch is at 12.15 today.', done => {
+      test.skip('Lunch is at 12:15 today. --> Lunch is at 12.15 today.', done => {
         const input = 'Lunch is at 12:15 today.';
         const output = 'Lunch is at 12.15 today.';
         
@@ -174,6 +174,22 @@ suite('Unit Tests', () => {
 
     });
 
+    suite('Auxiliary functions', () => {
+      test('translateFromAmerican()', done => {
+        const input = 'Mangoes are my favorite fruit.';
+        const result = Translator.translateFromAmerican(input);
+        const expected = 'Mangoes are my favourite fruit.';
+        assert.equal(result, expected);
+        done();
+      });
+      test('translateFromBritish()', done => {
+        const input = 'Paracetamol takes up to an hour to work.';
+        const expected = 'Tylenol takes up to an hour to work.';
+        const result = Translator.translateFromBritish(input);
+        assert.equal(result, expected);
+        done();
+      });
+    });
   });
 
 });
