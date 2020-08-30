@@ -50,7 +50,20 @@ function translate(sentence, idioma){
  * Translates sentence from american to british.
  * Returns the translated sentence. */
 function translateAmericanToBritish(sentence){
-  return sentence; // stub
+  // Voy a probar chequeando un único diccionario: american spelling.
+  // Esto tiene pinta de otra función auxiliar. Porque lo voy a necesitar para los otros diccionarios también.
+  let vocabulario = americanToBritishSpelling;
+  let clavesVoc = Object.keys(vocabulario);
+  let translated = sentence; 
+  let pattern = "";
+  let replacement = "";
+  for (let i = 0; i < clavesVoc.length; i++){
+    pattern = clavesVoc[i];
+    replacement = vocabulario[pattern];
+    translated = translated.replace(pattern, `<span class="highlight">${replacement}</span>`);
+  }
+  return translated; // stub
+// ¿Para separar la traducción de agregado del código html tendría en otra función aparte comparar la original con la traducción y las que no coinciden en la traducción agregarle el código?
 }
 
 /* String -> String
