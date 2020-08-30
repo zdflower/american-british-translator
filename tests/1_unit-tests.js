@@ -178,7 +178,7 @@ suite('Unit Tests', () => {
       test('translateAmericanToBritish()', done => {
         const input = 'Mangoes are my favorite fruit.';
         const result = Translator.translateAmericanToBritish(input);
-        const expected = 'Mangoes are my favourite fruit.';
+        const expected = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
         assert.equal(result, expected);
         done();
       });
