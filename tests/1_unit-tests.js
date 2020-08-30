@@ -175,17 +175,17 @@ suite('Unit Tests', () => {
     });
 
     suite('Auxiliary functions', () => {
-      test('translateFromAmerican()', done => {
+      test('translateAmericanToBritish()', done => {
         const input = 'Mangoes are my favorite fruit.';
-        const result = Translator.translateFromAmerican(input);
+        const result = Translator.translateAmericanToBritish(input);
         const expected = 'Mangoes are my favourite fruit.';
         assert.equal(result, expected);
         done();
       });
-      test('translateFromBritish()', done => {
+      test('translateBritishToAmerican()', done => {
         const input = 'Paracetamol takes up to an hour to work.';
         const expected = 'Tylenol takes up to an hour to work.';
-        const result = Translator.translateFromBritish(input);
+        const result = Translator.translateBritishToAmerican(input);
         assert.equal(result, expected);
         done();
       });

@@ -40,8 +40,8 @@ Contempla variaciones en la escritura de palabras, palabras completamente difere
 Cada palabra traducida debe estar formateada con <span class="highlight">...</span>*/
 function translate(sentence, idioma){
   let translated = sentence;
-  if (idioma === "american") translated = translateFromAmerican(translated);
-  else { translated =  translateFromBritish(translated); 
+  if (idioma === "american-to-british") translated = translateAmericanToBritish(translated);
+  else { translated = translateBritishToAmerican(translated); 
   return translated; 
   }
 }
@@ -49,14 +49,14 @@ function translate(sentence, idioma){
 /* String -> String
  * Translates sentence from american to british.
  * Returns the translated sentence. */
-function translateFromAmerican(sentence){
+function translateAmericanToBritish(sentence){
   return sentence; // stub
 }
 
 /* String -> String
  * Translates sentence from british to american 
  * Returns the translated sentence. */
-function translateFromBritish(sentence){
+function translateBritishToAmerican(sentence){
   return sentence; // stub
 }
 
@@ -99,7 +99,7 @@ try {
   module.exports = {
     translateHandler,
     clearHandler,
-    translateFromAmerican,
-    translateFromBritish
+    translateAmericanToBritish,
+    translateBritishToAmerican
   }
 } catch (e) {}
