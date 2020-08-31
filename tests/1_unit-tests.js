@@ -32,7 +32,7 @@ suite('Unit Tests', () => {
         const input = 'Mangoes are my favorite fruit.';
         const output = 'Mangoes are my favourite fruit.';
 
-        done();
+        // done();
       });
 
       test.skip('I ate yogurt for breakfast. --> I ate yoghurt for breakfast.', done => {
@@ -91,11 +91,13 @@ suite('Unit Tests', () => {
         // done();
       });
 
-      test.skip('Lunch is at 12:15 today. --> Lunch is at 12.15 today.', done => {
+      test('Lunch is at 12:15 today. --> Lunch is at 12.15 today.', done => {
         const input = 'Lunch is at 12:15 today.';
-        const output = 'Lunch is at 12.15 today.';
-        
-        // done();
+        // const output = 'Lunch is at 12.15 today.';
+        const result = Translator.translate(input, "american-to-british");
+        const expected = 'Lunch is at <span class="highlight">12.15</span> today.';
+        assert.equal(result, expected);
+        done();
       });
 
     });
@@ -175,20 +177,44 @@ suite('Unit Tests', () => {
     });
 
     suite('Auxiliary functions', () => {
-      test('translateAmericanToBritish()', done => {
-        const input = 'Mangoes are my favorite fruit.';
-        const result = Translator.translateAmericanToBritish(input);
-        const expected = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
-        assert.equal(result, expected);
-        done();
+      suite('translateAmericanToBritish()', () => { 
+        test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
+          const input = 'Mangoes are my favorite fruit.';
+          const result = Translator.translateAmericanToBritish(input);
+          const expected = 'Mangoes are my <span class="highlight">favourite</span> fruit.';
+          assert.equal(result, expected);
+          done();
+        });
+        test('To play hooky means to skip class or work. --> To bunk off means to skip class or work.', done => {
+          const input = 'To play hooky means to skip class or work.';
+          const result = Translator.translateAmericanToBritish(input);
+          const expected = 'To <span class="highlight">bunk off</span> means to skip class or work.';
+          assert.equal(result, expected);
+          done();
+        });        
       });
-      test('translateBritishToAmerican()', done => {
-        const input = 'Paracetamol takes up to an hour to work.';
-        const expected = 'Tylenol takes up to an hour to work.';
-        const result = Translator.translateBritishToAmerican(input);
-        assert.equal(result, expected);
-        done();
+
+      suite('translateBritishToAmerican()', () => {
+        test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
+          const input = 'Paracetamol takes up to an hour to work.';
+          const expected = 'Tylenol takes up to an hour to work.';
+          const result = Translator.translateBritishToAmerican(input);
+          assert.equal(result, expected);
+          done();
+        });
       });
+      
+      suite('translateTimeAmericanToBritish()', () => {
+        test('12:15 --> 12.15', done => {
+          const input = 'Lunch is at 12:15 today.';
+          // const output = 'Lunch is at 12.15 today.';
+          const result = Translator.translate(input, "american-to-british");
+          const expected = 'Lunch is at <span class="highlight">12.15</span> today.';
+          assert.equal(result, expected);
+          done();
+        });
+      });
+      
     });
   });
 
