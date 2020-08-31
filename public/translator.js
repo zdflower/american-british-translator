@@ -61,7 +61,18 @@ function translateAmericanToBritish(sentence){
  * Devuelve sentence reemplazando ':' (Am) por '.' (Br) en donde corresponda a la hora.
  * */
 function translateTimeAmericanToBritish(sentence){
-  return sentence; // stub
+// quizá tendría que generalizar un poco más esto, porque voy a tener código repetido. ¿cómo lo hago?
+  const time = /\s*(\d{0,1}\d)\:(\d\d)\s*/; //ir refinando la expresión hasta que se ajuste a lo requerido
+  //return sentence.replace(time, ' $1'+ '.' + '$2 '); // capturing groups
+  return sentence.replace(time, ' ' + asignarClaseHighlight('$1.$2') + ' '); // capturing groups
+}
+
+/* String -> String
+Devuelve '<span class="highlight">{expression}</span>'.
+Envuelve expression entre span tags y le da la classe highlight.
+*/
+function asignarClaseHighlight(expression){
+  return '<span class="highlight">'+ expression + '</span>';
 }
 
 /* String -> String
@@ -83,7 +94,7 @@ function translateFromVoc(sentence, vocabulario){
   for (let i = 0; i < clavesVoc.length; i++){
     pattern = clavesVoc[i];
     replacement = vocabulario[pattern];
-    translated = translated.replace(pattern, `<span class="highlight">${replacement}</span>`);
+    translated = translated.replace(pattern, asignarClaseHighlight(replacement));
   }
   return translated;
 }
