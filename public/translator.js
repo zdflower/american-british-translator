@@ -41,18 +41,41 @@ Cada palabra traducida debe estar formateada con <span class="highlight">...</sp
 function translate(sentence, idioma){
   let translated = sentence;
   if (idioma === "american-to-british") translated = translateAmericanToBritish(translated);
-  else { translated = translateBritishToAmerican(translated); 
+  else { translated = translateBritishToAmerican(translated);}
   return translated; 
-  }
 }
 
 /* String -> String
  * Translates sentence from american to british.
  * Returns the translated sentence. */
 function translateAmericanToBritish(sentence){
-  // Voy a probar chequeando un único diccionario: american spelling.
-  // Esto tiene pinta de otra función auxiliar. Porque lo voy a necesitar para los otros diccionarios también.
-  let vocabulario = americanToBritishSpelling;
+  let translated = translateFromVoc(sentence, americanToBritishSpelling);
+  translated = translateFromVoc(translated, americanToBritishTitles);
+  translated = translateFromVoc(translated, americanOnly);
+  translated = translateTimeAmericanToBritish(translated);
+  return translated;
+// ¿Para separar la traducción de agregado del código html tendría en otra función aparte comparar la original con la traducción y las que no coinciden en la traducción agregarle el código?
+}
+
+/* String -> String
+ * Devuelve sentence reemplazando ':' (Am) por '.' (Br) en donde corresponda a la hora.
+ * */
+function translateTimeAmericanToBritish(sentence){
+  return sentence; // stub
+}
+
+/* String -> String
+ * Devuelve sentence reemplazando '.' (Br) por ':' (Am) en donde corresponda a la hora.
+ * */
+function translateTimeBritishToAmerican(sentence){
+  return sentence; // stub
+}
+
+
+/* String { String : String } -> String
+ * Traduce sentence a partir de vocabulario.
+ * */
+function translateFromVoc(sentence, vocabulario){
   let clavesVoc = Object.keys(vocabulario);
   let translated = sentence; 
   let pattern = "";
@@ -62,8 +85,7 @@ function translateAmericanToBritish(sentence){
     replacement = vocabulario[pattern];
     translated = translated.replace(pattern, `<span class="highlight">${replacement}</span>`);
   }
-  return translated; // stub
-// ¿Para separar la traducción de agregado del código html tendría en otra función aparte comparar la original con la traducción y las que no coinciden en la traducción agregarle el código?
+  return translated;
 }
 
 /* String -> String
@@ -113,6 +135,9 @@ try {
     translateHandler,
     clearHandler,
     translateAmericanToBritish,
-    translateBritishToAmerican
+    translateBritishToAmerican,
+    translateTimeAmericanToBritish,
+    translateTimeBritishToAmerican,
+    translate 
   }
 } catch (e) {}
