@@ -61,10 +61,16 @@ function translateAmericanToBritish(sentence){
  * Devuelve sentence reemplazando ':' (Am) por '.' (Br) en donde corresponda a la hora.
  * */
 function translateTimeAmericanToBritish(sentence){
-// quizá tendría que generalizar un poco más esto, porque voy a tener código repetido. ¿cómo lo hago?
-  const time = /\s*(\d{0,1}\d)\:(\d\d)\s*/; //ir refinando la expresión hasta que se ajuste a lo requerido
-  //return sentence.replace(time, ' $1'+ '.' + '$2 '); // capturing groups
-  return sentence.replace(time, ' ' + asignarClaseHighlight('$1.$2') + ' '); // capturing groups
+  return translateTime(sentence, ':', '.');
+}
+
+/* String String String -> String
+Reemplaza en sentence, en la expresión de la hora, char_1 por char_2.
+*/
+function translateTime(sentence, char_1, char_2){
+  //const time = /\s*(\d{0,1}\d)\:(\d\d)\s*/; 
+  const time = new RegExp('\\s*(\\d{0,1}\\d)' + char_1 + '(\\d\\d)\\s*');
+  return sentence.replace(time, ' ' + asignarClaseHighlight('$1' + char_2 + '$2') + ' '); // capturing groups
 }
 
 /* String -> String
@@ -79,7 +85,7 @@ function asignarClaseHighlight(expression){
  * Devuelve sentence reemplazando '.' (Br) por ':' (Am) en donde corresponda a la hora.
  * */
 function translateTimeBritishToAmerican(sentence){
-  return sentence; // stub
+  return translateTime(sentence, '.', ':');
 }
 
 
