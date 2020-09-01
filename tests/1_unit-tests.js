@@ -177,6 +177,22 @@ suite('Unit Tests', () => {
     });
 
     suite('Auxiliary functions', () => {
+      suite('translateFromVoc()', () => {
+        test('br to am: paracetamol -> tylenol', done => {
+          const input = 'paracetamol';
+          const result = Translator.translateFromVoc(input, Translator.britishOnly);
+          const expected = '<span class="highlight">Tylenol</span>';
+          assert.equal(result, expected);
+          done();
+        });
+        test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
+          const input = 'Paracetamol takes up to an hour to work.';
+          const expected = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
+          const result = Translator.translateFromVoc(input, Translator.britishOnly);
+          assert.equal(result, expected);
+          done();
+        });
+      });
       suite('translateAmericanToBritish()', () => { 
         test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
           const input = 'Mangoes are my favorite fruit.';
@@ -194,10 +210,10 @@ suite('Unit Tests', () => {
         });        
       });
 
-      suite.skip('translateBritishToAmerican()', () => {
+      suite('translateBritishToAmerican()', () => {
         test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
           const input = 'Paracetamol takes up to an hour to work.';
-          const expected = 'Tylenol takes up to an hour to work.';
+          const expected = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
           const result = Translator.translateBritishToAmerican(input);
           assert.equal(result, expected);
           done();
@@ -214,6 +230,10 @@ suite('Unit Tests', () => {
           done();
         });
       });
+
+      suite.skip('getInvertedDictionary()', () => {});
+      suite.skip('getBritishToAmericanSpelling()', () => {});
+      suite.skip('getBritishToAmericanTitles', () => {});
       
     });
   });
