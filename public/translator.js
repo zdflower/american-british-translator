@@ -94,12 +94,13 @@ function translateTimeBritishToAmerican(sentence){
  * */
 function translateFromVoc(sentence, vocabulario){
   let clavesVoc = Object.keys(vocabulario);
-  let translated = sentence; 
+  let translated = sentence;
   let pattern = "";
   let replacement = "";
   for (let i = 0; i < clavesVoc.length; i++){
-    pattern = clavesVoc[i];
-    replacement = vocabulario[pattern];
+    const key = clavesVoc[i];
+    pattern = new RegExp('\\b' + key + '\\b', 'i'); 
+    replacement = vocabulario[key]; 
     translated = translated.replace(pattern, asignarClaseHighlight(replacement));
   }
   return translated;
@@ -109,7 +110,39 @@ function translateFromVoc(sentence, vocabulario){
  * Translates sentence from british to american 
  * Returns the translated sentence. */
 function translateBritishToAmerican(sentence){
-  return sentence; // stub
+  let translate = translateFromVoc(sentence, britishOnly);
+  translate = translateFromVoc(translate, getBritishToAmericanSpelling());
+  translate = translateFromVoc(translate, getBritishToAmericanTitles());
+  translate = translateTimeBritishToAmerican(translate);
+  return translate;
+}
+
+/* -> { String: String }
+Produce el diccionario de spelling de British a American.
+Utiliza el diccionario de spelling de American a British.
+*/
+function getBritishToAmericanSpelling(){ 
+ return getInvertedDictionary(americanToBritishSpelling);
+}
+
+/* -> { String: String }
+Produce el diccionario de titles de British a American.
+Utiliza el diccionario de titles de American a British.
+*/
+function getBritishToAmericanTitles(){
+  return getInvertedDictionary(americanToBritishTitles);
+}
+
+/* { String: String } -> { String: String }
+Toma vocabulario e invierte claves y valores.
+Se asume que vocabulario no tiene "sinónimos", que no hay dos valores iguales para claves distintas.
+*/
+function getInvertedDictionary(dictionary){
+  const newDict = {};
+  Object.keys(dictionary).forEach(key => {
+    newDict[dictionary[key]] = key;
+   });
+  return newDict;
 }
 
 /* Responde al click del clear-btn
@@ -155,6 +188,12 @@ try {
     translateBritishToAmerican,
     translateTimeAmericanToBritish,
     translateTimeBritishToAmerican,
-    translate 
+    translate,
+    translateFromVoc,
+    americanToBritishSpelling,
+    americanToBritishTitles,
+    britishOnly,
+    getBritishToAmericanSpelling,
+    getBritishToAmericanTitles
   }
 } catch (e) {}
