@@ -157,7 +157,8 @@ function clearHandler(){
 }
 
 function showTranslatedSentence(sentence){
-  translatedSentenceDiv.textContent = sentence;
+//  translatedSentenceDiv.textContent = sentence;
+  translatedSentenceDiv.innerHTML = sentence;
 }
 
 function clearTextInput(){
