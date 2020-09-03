@@ -93,17 +93,38 @@ function translateTimeBritishToAmerican(sentence){
  * Traduce sentence a partir de vocabulario.
  * */
 function translateFromVoc(sentence, vocabulario){
-  let clavesVoc = Object.keys(vocabulario);
-  let translated = sentence;
-  let pattern = "";
-  let replacement = "";
-  for (let i = 0; i < clavesVoc.length; i++){
-    const key = clavesVoc[i];
-    pattern = new RegExp('\\b' + key + '\\b', 'i'); 
-    replacement = vocabulario[key]; 
-    translated = translated.replace(pattern, asignarClaseHighlight(replacement));
+  
+    let clavesVoc = Object.keys(vocabulario);
+    let translated = sentence;
+    let pattern = "";
+    let replacement = "";
+    for (let i = 0; i < clavesVoc.length; i++){
+      const key = clavesVoc[i];
+      pattern = new RegExp('\\b' + key + '\\b', 'i'); 
+      replacement = vocabulario[key]; 
+      translated = replacePattern(translated, pattern, asignarClaseHighlight(replacement), vocabulario); // me parece que esto no arregla el problema que pretendía, de no retraducir lo traducido... Me parece que lo que sí podría funcionar es una recursión acá donde lo que se vaya reduciendo es el diccionario, que con cada llamada sean menos las claves y se termine cuando ... pero cómo? debería quizá hacer un primer reemplazo y después pasar un vocabulario sin el pattern hallado, pero entonces si tuviera que traducir en varios lugares de la frase original no lo va a hacer por cómo es el reemplazo. ¿Entonces sería mejor que en reemplazar se hiciera la partición por todos los lugares donde aparece? Pero no sería predecible la cantidad de llamados recursivos a translateFromVoc, sería un despelote, habría que hacer un loop.... ¿No hay otra forma menos rebuscada?
+      // translated.replace(pattern, asignarClaseHighlight(replacement));
+    }
+    return translated;
+}
+
+/* String String/RegExp String { String: String } -> String
+ * Reemplaza pattern por replacement en sentence y devuelve una nueva */
+function replacePattern(sentence, pattern, replacement, vocabulario){
+  //console.error(`sentence: ${sentence}`);
+  const particion = sentence.split(pattern, 2);
+  //console.error(`partición: ${particion}`);
+  //console.error(`partición length: ${particion.length}`);
+  // Caso base: el pattern no está en sentence, partición tiene un solo elemento.
+  if (particion.length < 2) return sentence;
+  else {
+    //console.error("RAMA ELSE");
+    const delante = translateFromVoc(particion[0], vocabulario);
+    //console.error(`delante: ${delante}`);
+    const detras = translateFromVoc(particion[1], vocabulario);
+    //console.error(`delante: ${delante} - detrás: ${detras}`);
+    return [ delante, replacement, detras].join("");
   }
-  return translated;
 }
 
 /* String -> String
@@ -195,6 +216,7 @@ try {
     americanToBritishTitles,
     britishOnly,
     getBritishToAmericanSpelling,
-    getBritishToAmericanTitles
+    getBritishToAmericanTitles,
+    replacePattern
   }
 } catch (e) {}

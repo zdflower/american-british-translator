@@ -26,7 +26,7 @@ suite('Unit Tests', () => {
 
   suite('Function ____()', () => {
 
-    suite('American to British English', () => {
+    suite.skip('American to British English', () => {
 
       test.skip('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
         const input = 'Mangoes are my favorite fruit.';
@@ -177,7 +177,7 @@ suite('Unit Tests', () => {
     });
 
     suite('Auxiliary functions', () => {
-      suite('translateFromVoc()', () => {
+      suite.skip('translateFromVoc()', () => {
         test('br to am: paracetamol -> tylenol', done => {
           const input = 'paracetamol';
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
@@ -193,7 +193,7 @@ suite('Unit Tests', () => {
           done();
         });
       });
-      suite('translateAmericanToBritish()', () => { 
+      suite.skip('translateAmericanToBritish()', () => { 
         test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
           const input = 'Mangoes are my favorite fruit.';
           const result = Translator.translateAmericanToBritish(input);
@@ -210,7 +210,7 @@ suite('Unit Tests', () => {
         });        
       });
 
-      suite('translateBritishToAmerican()', () => {
+      suite.skip('translateBritishToAmerican()', () => {
         test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
           const input = 'Paracetamol takes up to an hour to work.';
           const expected = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
@@ -220,7 +220,7 @@ suite('Unit Tests', () => {
         });
       });
       
-      suite('translateTimeAmericanToBritish()', () => {
+      suite.skip('translateTimeAmericanToBritish()', () => {
         test('12:15 --> 12.15', done => {
           const input = 'Lunch is at 12:15 today.';
           // const output = 'Lunch is at 12.15 today.';
@@ -234,7 +234,22 @@ suite('Unit Tests', () => {
       suite.skip('getInvertedDictionary()', () => {});
       suite.skip('getBritishToAmericanSpelling()', () => {});
       suite.skip('getBritishToAmericanTitles', () => {});
-      
+      suite('replacePattern(sentence, pattern, replacement)', () => {
+        test(' I had a bicky then went to the chippy, bicky, cookie --> "I had a cookie then went to the chippy"', done => {
+          const input = 'I had a bicky then went to the chippy'
+          const result = Translator.replacePattern(input, 'bicky', 'cookie', Translator.britishOnly);
+          const expected = "I had a cookie then went to the chippy";
+          assert.equal(result, expected);
+          done();
+        });
+        test(' then went to the chippy, chippy, fish-and-chip shop --> " then went to the fish-and-chip shop"', done => {
+          const input = ' then went to the chippy'
+          const result = Translator.replacePattern(input, 'chippy', 'fish-and-chip shop', Translator.britishOnly);
+          const expected = " then went to the fish-and-chip shop";
+          assert.equal(result, expected);
+          done();
+        });   
+      });
     });
   });
 
