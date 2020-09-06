@@ -49,13 +49,23 @@ function translate(sentence, idioma){
  * Translates sentence from american to british.
  * Returns the translated sentence. */
 function translateAmericanToBritish(sentence){
-  let translated = translateFromVoc(sentence, americanToBritishSpelling);
-  translated = translateFromVoc(translated, americanToBritishTitles);
-  translated = translateFromVoc(translated, americanOnly);
-  translated = translateTimeAmericanToBritish(translated);
+  // A translateFromVoc le pasa siempre la frase original y devuelve un objeto con las posiciones de las expresiones a reemplazar, el pattern y el reemplazo
+  // Otra idea sería construir un único diccionario a partir de americanToBritishSpelling, americanToBritishTitles y americanOnly.
+  const wordsToTranslate = {
+    ...translateFromVoc(sentence, americanToBritishSpelling),
+    ...translateFromVoc(sentence, americanToBritishTitles),
+    ...translateFromVoc(sentence, americanOnly),
+    };
+  let translated = generateTranslatedSentence(sentence, wordsToTranslate);
+  translated = translateTimeAmericanToBritish(translated); // ver después si también tengo que cambiar esto.
   return translated;
-// ¿Para separar la traducción de agregado del código html tendría en otra función aparte comparar la original con la traducción y las que no coinciden en la traducción agregarle el código?
 }
+
+/* String { String: { String: String } } -> String
+ * wordsToTranslate contiene las posiciones de las expresiones a traducir. Las claves son los índices donde realizar los cambios en la frase original. A esas claves corresponden objetos con las propiedades: pattern y replacement.
+ * Produce una frase traducida a partir de los datos que contienen los input.
+ * */
+function generateTranslatedSentence(sentence, wordsToTranslate){}
 
 /* String -> String
  * Devuelve sentence reemplazando ':' (Am) por '.' (Br) en donde corresponda a la hora.
@@ -89,23 +99,22 @@ function translateTimeBritishToAmerican(sentence){
 }
 
 
-/* String { String : String } -> String
- * Traduce sentence a partir de vocabulario.
+/* String { String : String } -> { String: { String: String } }
+ * Produce un objeto con claves que indican la posición de la expresión a traducir y valores que contienen las propiedades pattern y replacement.
  * */
 function translateFromVoc(sentence, vocabulario){
-  
+  // para cada pattern buscar las ocurrencias en sentence y construir el objeto de wordsToTranslate
+    const wordsToTranslate = {}; 
     let clavesVoc = Object.keys(vocabulario);
-    let translated = sentence;
     let pattern = "";
-    let replacement = "";
     for (let i = 0; i < clavesVoc.length; i++){
       const key = clavesVoc[i];
       pattern = new RegExp('\\b' + key + '\\b', 'i'); 
-      replacement = vocabulario[key]; 
-      translated = replacePattern(translated, pattern, asignarClaseHighlight(replacement), vocabulario); // me parece que esto no arregla el problema que pretendía, de no retraducir lo traducido... Me parece que lo que sí podría funcionar es una recursión acá donde lo que se vaya reduciendo es el diccionario, que con cada llamada sean menos las claves y se termine cuando ... pero cómo? debería quizá hacer un primer reemplazo y después pasar un vocabulario sin el pattern hallado, pero entonces si tuviera que traducir en varios lugares de la frase original no lo va a hacer por cómo es el reemplazo. ¿Entonces sería mejor que en reemplazar se hiciera la partición por todos los lugares donde aparece? Pero no sería predecible la cantidad de llamados recursivos a translateFromVoc, sería un despelote, habría que hacer un loop.... ¿No hay otra forma menos rebuscada?
-      // translated.replace(pattern, asignarClaseHighlight(replacement));
+      // acá tenés que obtener el índice de pattern en sentence. Si no está devuelve -1, ojo.
+      const donde = sentence.indexOf(pattern);
+      if (!(donde === -1)) wordsToTranslate[donde] = { pattern: vocabulario[key] }; // supongo (!) que como clave de wordsToTranslate se castea a string, ¿o no?
     }
-    return translated;
+    return wordsToTranslate;
 }
 
 /* String String/RegExp String { String: String } -> String
