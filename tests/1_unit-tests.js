@@ -177,19 +177,26 @@ suite('Unit Tests', () => {
     });
 
     suite('Auxiliary functions', () => {
-      suite.skip('translateFromVoc()', () => {
+      suite('translateFromVoc()', () => {
         test('br to am: paracetamol -> tylenol', done => {
           const input = 'paracetamol';
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
-          const expected = '<span class="highlight">Tylenol</span>';
-          assert.equal(result, expected);
+          const expected = [ [ 0, "paracetamol", "Tylenol" ] ]; //{ "0": { "paracetamol" : "Tylenol"} };
+          assert.deepEqual(result, expected);
           done();
         });
         test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
           const input = 'Paracetamol takes up to an hour to work.';
-          const expected = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
-          assert.equal(result, expected);
+          const expected = [ [0, "paracetamol", "Tylenol"] ]; //{ "0": { "paracetamol" : "Tylenol"} };
+          assert.deepEqual(result, expected);
+          done();
+        });
+        test('I had a bicky then went to the chippy. --> I had a cookie then went to the fish-and-chip shop.', done => {
+          const input = 'I had a bicky then went to the chippy';
+          const expected = [[8, "bicky", "cookie"], [31, "chippy", "fish-and-chip shop"]];// { "8": { "bicky" : "cookie"}, "31": {"chippy": "fish-and-chip shop"} };
+          const result = Translator.translateFromVoc(input, Translator.britishOnly);
+          assert.deepEqual(result, expected);
           done();
         });
       });
@@ -234,7 +241,7 @@ suite('Unit Tests', () => {
       suite.skip('getInvertedDictionary()', () => {});
       suite.skip('getBritishToAmericanSpelling()', () => {});
       suite.skip('getBritishToAmericanTitles', () => {});
-      suite('replacePattern(sentence, pattern, replacement)', () => {
+      suite.skip('replacePattern(sentence, pattern, replacement)', () => {
         test(' I had a bicky then went to the chippy, bicky, cookie --> "I had a cookie then went to the chippy"', done => {
           const input = 'I had a bicky then went to the chippy'
           const result = Translator.replacePattern(input, 'bicky', 'cookie', Translator.britishOnly);

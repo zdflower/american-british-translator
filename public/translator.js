@@ -51,18 +51,22 @@ function translate(sentence, idioma){
 function translateAmericanToBritish(sentence){
   // A translateFromVoc le pasa siempre la frase original y devuelve un objeto con las posiciones de las expresiones a reemplazar, el pattern y el reemplazo
   // Otra idea sería construir un único diccionario a partir de americanToBritishSpelling, americanToBritishTitles y americanOnly.
-  const wordsToTranslate = {
+  const wordsToTranslate = [
     ...translateFromVoc(sentence, americanToBritishSpelling),
     ...translateFromVoc(sentence, americanToBritishTitles),
+    ...translateFromVoc(sentence, americanOnly)]
+    /* {
+...translateFromVoc(sentence, americanToBritishSpelling),
+    ...translateFromVoc(sentence, americanToBritishTitles),
     ...translateFromVoc(sentence, americanOnly),
-    };
+    };*/
   let translated = generateTranslatedSentence(sentence, wordsToTranslate);
   translated = translateTimeAmericanToBritish(translated); // ver después si también tengo que cambiar esto.
   return translated;
 }
 
-/* String { String: { String: String } } -> String
- * wordsToTranslate contiene las posiciones de las expresiones a traducir. Las claves son los índices donde realizar los cambios en la frase original. A esas claves corresponden objetos con las propiedades: pattern y replacement.
+/* String [[ Number, String, String ]] -> String
+ * wordsToTranslate contiene las posiciones de las expresiones a traducir (los índices donde realizar los cambios en la frase original), el pattern y el replacement.
  * Produce una frase traducida a partir de los datos que contienen los input.
  * */
 function generateTranslatedSentence(sentence, wordsToTranslate){}
@@ -98,21 +102,22 @@ function translateTimeBritishToAmerican(sentence){
   return translateTime(sentence, '.', ':');
 }
 
-
-/* String { String : String } -> { String: { String: String } }
- * Produce un objeto con claves que indican la posición de la expresión a traducir y valores que contienen las propiedades pattern y replacement.
+/* String { String : String } -> [[Number, String, String]]
+ * Produce un array con tríos con la posición de la expresión a traducir, pattern y replacement.
  * */
 function translateFromVoc(sentence, vocabulario){
   // para cada pattern buscar las ocurrencias en sentence y construir el objeto de wordsToTranslate
-    const wordsToTranslate = {}; 
+    const wordsToTranslate = []; 
     let clavesVoc = Object.keys(vocabulario);
     let pattern = "";
     for (let i = 0; i < clavesVoc.length; i++){
       const key = clavesVoc[i];
       pattern = new RegExp('\\b' + key + '\\b', 'i'); 
       // acá tenés que obtener el índice de pattern en sentence. Si no está devuelve -1, ojo.
-      const donde = sentence.indexOf(pattern);
-      if (!(donde === -1)) wordsToTranslate[donde] = { pattern: vocabulario[key] }; // supongo (!) que como clave de wordsToTranslate se castea a string, ¿o no?
+      const donde = sentence.search(pattern);
+      // console.error(`índice de la ocurrencia: ${donde}`);
+      if (!(donde === -1)) wordsToTranslate.push([donde, key, vocabulario[key]]); // supongo (!) que como clave de wordsToTranslate se castea a string, ¿o no?
+      //  else { if (key === "bicky") console.error(`key ${key}, pattern ${pattern}, donde ${donde}`) }
     }
     return wordsToTranslate;
 }
