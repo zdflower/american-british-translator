@@ -26,7 +26,7 @@ suite('Unit Tests', () => {
 
   suite('Function ____()', () => {
 
-    suite.skip('American to British English', () => {
+    suite('American to British English', () => {
 
       test.skip('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
         const input = 'Mangoes are my favorite fruit.';
@@ -181,26 +181,44 @@ suite('Unit Tests', () => {
         test('br to am: paracetamol -> tylenol', done => {
           const input = 'paracetamol';
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
-          const expected = [ [ 0, "paracetamol", "Tylenol" ] ]; //{ "0": { "paracetamol" : "Tylenol"} };
+          const expected = [ [ 0, "paracetamol", "Tylenol" ] ];
           assert.deepEqual(result, expected);
           done();
         });
         test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
           const input = 'Paracetamol takes up to an hour to work.';
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
-          const expected = [ [0, "paracetamol", "Tylenol"] ]; //{ "0": { "paracetamol" : "Tylenol"} };
+          const expected = [ [0, "paracetamol", "Tylenol"] ];
           assert.deepEqual(result, expected);
           done();
         });
         test('I had a bicky then went to the chippy. --> I had a cookie then went to the fish-and-chip shop.', done => {
           const input = 'I had a bicky then went to the chippy';
-          const expected = [[8, "bicky", "cookie"], [31, "chippy", "fish-and-chip shop"]];// { "8": { "bicky" : "cookie"}, "31": {"chippy": "fish-and-chip shop"} };
+          const expected = [[8, "bicky", "cookie"], [31, "chippy", "fish-and-chip shop"]];
           const result = Translator.translateFromVoc(input, Translator.britishOnly);
           assert.deepEqual(result, expected);
           done();
         });
       });
-      suite.skip('translateAmericanToBritish()', () => { 
+      
+      suite('generateTranslatedSentence()', () => {
+        test('br to am: paracetamol -> tylenol', done => {
+          const input = 'paracetamol';
+          const result = Translator.generateTranslatedSentence(input, [ [ 0, "paracetamol", "Tylenol" ] ]);
+          const expected = 'Tylenol';
+          assert.deepEqual(result, expected);
+          done();
+        });
+        test('I had a bicky then went to the chippy. --> I had a cookie then went to the fish-and-chip shop.', done => {
+          const input = 'I had a bicky then went to the chippy';
+          const expected = 'I had a cookie then went to the fish-and-chip shop';
+          const result = Translator.generateTranslatedSentence(input, [[8, "bicky", "cookie"], [31, "chippy", "fish-and-chip shop"]]);
+          assert.deepEqual(result, expected);
+          done();
+        });
+      });
+      
+      suite('translateAmericanToBritish()', () => { 
         test('Mangoes are my favorite fruit. --> Mangoes are my favourite fruit.', done => {
           const input = 'Mangoes are my favorite fruit.';
           const result = Translator.translateAmericanToBritish(input);
@@ -217,7 +235,7 @@ suite('Unit Tests', () => {
         });        
       });
 
-      suite.skip('translateBritishToAmerican()', () => {
+      suite('translateBritishToAmerican()', () => {
         test('Paracetamol takes up to an hour to work --> Tylenol takes up to an hour to work.', done => {
           const input = 'Paracetamol takes up to an hour to work.';
           const expected = '<span class="highlight">Tylenol</span> takes up to an hour to work.';
@@ -227,7 +245,7 @@ suite('Unit Tests', () => {
         });
       });
       
-      suite.skip('translateTimeAmericanToBritish()', () => {
+      suite('translateTimeAmericanToBritish()', () => {
         test('12:15 --> 12.15', done => {
           const input = 'Lunch is at 12:15 today.';
           // const output = 'Lunch is at 12.15 today.';
