@@ -55,13 +55,22 @@ function translateAmericanToBritish(sentence){
     ...translateFromVoc(sentence, americanToBritishSpelling),
     ...translateFromVoc(sentence, americanToBritishTitles),
     ...translateFromVoc(sentence, americanOnly)]
-    /* {
-...translateFromVoc(sentence, americanToBritishSpelling),
-    ...translateFromVoc(sentence, americanToBritishTitles),
-    ...translateFromVoc(sentence, americanOnly),
-    };*/
   let translated = generateTranslatedSentence(sentence, wordsToTranslate);
   translated = translateTimeAmericanToBritish(translated); // ver después si también tengo que cambiar esto.
+  return translated;
+}
+
+/* String -> String
+ * Translates sentence from british to american 
+ * Returns the translated sentence. */
+function translateBritishToAmerican(sentence){
+  const wordsToTranslate = [
+    ...translateFromVoc(sentence, britishOnly),
+    ...translateFromVoc(sentence, getBritishToAmericanSpelling()),
+    ...translateFromVoc(sentence, getBritishToAmericanTitles())
+  ];
+  let translated = generateTranslatedSentence(sentence, wordsToTranslate);
+  translated = translateTimeBritishToAmerican(translated);
   return translated;
 }
 
@@ -151,17 +160,6 @@ function replacePattern(sentence, pattern, replacement, vocabulario){
     //console.error(`delante: ${delante} - detrás: ${detras}`);
     return [ delante, replacement, detras].join("");
   }
-}
-
-/* String -> String
- * Translates sentence from british to american 
- * Returns the translated sentence. */
-function translateBritishToAmerican(sentence){
-  let translate = translateFromVoc(sentence, britishOnly);
-  translate = translateFromVoc(translate, getBritishToAmericanSpelling());
-  translate = translateFromVoc(translate, getBritishToAmericanTitles());
-  translate = translateTimeBritishToAmerican(translate);
-  return translate;
 }
 
 /* -> { String: String }
