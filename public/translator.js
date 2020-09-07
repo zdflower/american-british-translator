@@ -69,7 +69,19 @@ function translateAmericanToBritish(sentence){
  * wordsToTranslate contiene las posiciones de las expresiones a traducir (los índices donde realizar los cambios en la frase original), el pattern y el replacement.
  * Produce una frase traducida a partir de los datos que contienen los input.
  * */
-function generateTranslatedSentence(sentence, wordsToTranslate){}
+function generateTranslatedSentence(sentence, wordsToTranslate){
+  let trad = '';
+  let inicio = 0;
+  let final = 0;
+  wordsToTranslate.forEach(item => {
+    final = item[0];
+    trad += sentence.substring(inicio, final) + item[2];
+    inicio = final + item[1].length;
+  });
+  // acá todavía faltaría el final de sentence desde inicio
+  trad += sentence.substring(inicio);
+  return trad;
+}
 
 /* String -> String
  * Devuelve sentence reemplazando ':' (Am) por '.' (Br) en donde corresponda a la hora.
@@ -231,6 +243,7 @@ try {
     britishOnly,
     getBritishToAmericanSpelling,
     getBritishToAmericanTitles,
-    replacePattern
+    replacePattern,
+    generateTranslatedSentence
   }
 } catch (e) {}
